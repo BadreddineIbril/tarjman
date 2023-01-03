@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import NavBar from './components/NavBar'
+import SideBar from './components/SideBar'
+import BookMarks from './pages/BookMarks';
+import Home from './pages/Home'
+import Speech from './pages/Speech';
+import Document from './pages/Document'
 
 function App() {
+
+  const [menu, setMenu] = useState('/')
+  const [allSave, setAllSave] = useState([])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <NavBar />
+        <div className='context'>
+            <SideBar menu={menu} setMenu={setMenu} />
+            <Routes>
+                <Route path="/" element={<Home setAllSave={setAllSave} />} />
+                <Route path="/bookmarks" element={<BookMarks allSave={allSave} setAllSave={setAllSave} />} />
+                <Route path="/speech" element={<Speech />} />
+                <Route path='/document' element={<Document />} />
+            </Routes>
+        </div>
     </div>
   );
 }
